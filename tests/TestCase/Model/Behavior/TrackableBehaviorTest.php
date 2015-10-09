@@ -19,7 +19,8 @@ class TrackableBehaviorTest extends TestCase
      */
     public $fixtures = [
         'app.todos',
-        'app.users'
+        'app.users',
+        'app.trackings'
     ];
 
     /**
@@ -109,7 +110,15 @@ class TrackableBehaviorTest extends TestCase
         $this->Todos->stopTracking($todo);
     }
 
-    public function timeSpent()
+    public function testTimeSpent()
     {
+        $todo = $this->Todos->newEntity();
+        $this->assertTrue(0 === $this->Todos->timeSpent($todo));
+
+        $todo = $this->Todos->find()->first();
+        $this->assertEquals(7200, $this->Todos->timeSpent($todo));
+
+        $todo = $this->Todos->find()->last();
+        $this->assertEquals(7245, $this->Todos->timeSpent($todo));
     }
 }

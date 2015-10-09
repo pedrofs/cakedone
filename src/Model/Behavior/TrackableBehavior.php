@@ -93,13 +93,29 @@ class TrackableBehavior extends Behavior
         return false;
     }
 
+    /**
+     * Calculates the time spent for the given $entity
+     *
+     * @param EntityInterface $entity
+     * @return integer The time spent for the $entity in seconds
+     */
+    public function timeSpent(EntityInterface $entity)
+    {
+        return $this->_table->Trackings
+            ->find('all')
+            ->where(['trackable_id' => $entity->id])
+            ->reduce(function ($total, $tracking) {
+                if (!$tracking->stopped_at) {
+                    return Time::now()->diffInSeconds($tracking->started_at) + $total;
+                }
+
+                return $tracking->stopped_at->diffInSeconds($tracking->started_at) + $total;
+            }, 0);
+    }
+
     private function findStartedTrackingForEntity(EntityInterface $entity)
     {
-        $query = $this->_table->Trackings->find()
-            ->where([
-                'stopped_at' => '0000-00-00 00:00:00',
-                'trackable_id' => $entity->id
-            ]);
+        $query = $this->_table->Trackings->find('started', ['id' => $entity->id]);
 
         return $query->first();
     }

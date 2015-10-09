@@ -13,13 +13,13 @@ class CreateTrackings extends AbstractMigration
     public function change()
     {
         $table = $this->table('trackings');
-        $table->addColumn('started_at', 'timestamp', [
+        $table->addColumn('started_at', 'datetime', [
             'default' => null,
-            'null' => false,
+            'null' => true
         ]);
-        $table->addColumn('stopped_at', 'timestamp', [
+        $table->addColumn('stopped_at', 'datetime', [
             'default' => null,
-            'null' => false,
+            'null' => true
         ]);
         $table->addColumn('trackable_id', 'integer', [
             'default' => null,

@@ -46,32 +46,20 @@ class TodosTableTest extends TestCase
     }
 
     /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test validationDefault method
      *
      * @return void
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        $todo = $this->Todos->newEntity();
 
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        $todo = $this->Todos->patchEntity($todo, ['content' => '', 'is_done' => false]);
+        $expectedError = ['content' => ['_empty' => 'This field cannot be left empty']];
+        $this->assertEquals($todo->errors(), $expectedError);
+
+        $todo = $this->Todos->patchEntity($todo, ['content' => 'Write tests for app']);
+        $expectedError = ['is_done' => ['_required' => 'This field is required']];
+        $this->assertEquals($todo->errors(), $expectedError);
     }
 }

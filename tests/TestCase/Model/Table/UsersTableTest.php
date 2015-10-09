@@ -46,32 +46,54 @@ class UsersTableTest extends TestCase
     }
 
     /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test validationDefault method
      *
      * @return void
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $user = $this->Users->newEntity($this->validAttributes());
+        $this->assertEquals(count($user->errors()), 0);
+
+        $attributes = $this->validAttributes();
+        $attributes['email'] = '';
+        $user = $this->Users->newEntity($attributes);
+        $this->assertEquals(['email' => ['_empty' => 'This field cannot be left empty']], $user->errors());
+
+        $attributes = $this->validAttributes();
+        $attributes['name'] = '';
+        $user = $this->Users->newEntity($attributes);
+        $this->assertEquals(['name' => ['_empty' => 'This field cannot be left empty']], $user->errors());
+
+        $attributes = $this->validAttributes();
+        $attributes['password'] = '';
+        $user = $this->Users->newEntity($attributes);
+        $this->assertEquals(
+            [
+                'password' => ['_empty' => 'This field cannot be left empty'],
+                'password_confirmation' => ['custom' => 'The password does not match']
+            ],
+            $user->errors()
+        );
+
+        $attributes = $this->validAttributes();
+        $attributes['email'] = 'testtest.com';
+        $user = $this->Users->newEntity($attributes);
+        $this->assertEquals(['email' => ['valid' => 'The provided value is invalid']], $user->errors());
+
+        $attributes = $this->validAttributes();
+        $attributes['password_confirmation'] = '321';
+        $user = $this->Users->newEntity($attributes);
+        $this->assertEquals(['password_confirmation' => ['custom' => 'The password does not match']], $user->errors());
     }
 
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
+    private function validAttributes()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        return [
+            'name' => 'Test',
+            'email' => 'test@test.com',
+            'password' => '123',
+            'password_confirmation' => '123'
+        ];
     }
 }

@@ -53,13 +53,11 @@ class TodosTableTest extends TestCase
     public function testValidationDefault()
     {
         $todo = $this->Todos->newEntity();
-
         $todo = $this->Todos->patchEntity($todo, ['content' => '', 'is_done' => false]);
-        $expectedError = ['content' => ['_empty' => 'This field cannot be left empty']];
-        $this->assertEquals($todo->errors(), $expectedError);
+        $this->assertEquals($todo->errors(), ['content' => ['_empty' => 'This field cannot be left empty']]);
 
+        $todo = $this->Todos->newEntity();
         $todo = $this->Todos->patchEntity($todo, ['content' => 'Write tests for app']);
-        $expectedError = ['is_done' => ['_required' => 'This field is required']];
-        $this->assertEquals($todo->errors(), $expectedError);
+        $this->assertEquals($todo->errors(), ['is_done' => ['_required' => 'This field is required']]);
     }
 }

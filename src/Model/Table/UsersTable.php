@@ -61,6 +61,18 @@ class UsersTable extends Table
             ->requirePresence('password', 'create')
             ->notEmpty('password');
 
+        $validator
+            ->add('password_confirmation', 'custom', [
+                'rule' => function ($value, $context) {
+                    if (isset($context['data']['password']) && $context['data']['password'] == $value) {
+                        return true;
+                    }
+
+                    return false;
+                },
+                'message' => 'The password does not match'
+            ]);
+
         return $validator;
     }
 

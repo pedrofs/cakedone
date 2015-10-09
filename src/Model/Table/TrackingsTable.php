@@ -71,4 +71,21 @@ class TrackingsTable extends Table
         // $rules->add($rules->existsIn(['trackable_id'], 'Trackables'));
         return $rules;
     }
+
+    /**
+     * Returns the query for finding the started and not stopped record
+     *
+     * @param integer $id The target entity id
+     * @return Query
+     */
+    public function findStarted(Query $q, $options)
+    {
+        $q->where([
+            'stopped_at' => '0000-00-00 00:00:00',
+            'trackable_id' => $options['id']
+        ]);
+
+        return $q;
+
+    }
 }

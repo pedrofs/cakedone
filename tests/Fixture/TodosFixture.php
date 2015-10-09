@@ -51,5 +51,13 @@ class TodosFixture extends TestFixture
             'created' => '2015-10-08 19:56:36',
             'modified' => '2015-10-08 19:56:36'
         ],
+        [
+            'id' => 2,
+            'content' => 'This another simple todo!',
+            'user_id' => 1,
+            'is_done' => 1,
+            'created' => '2015-10-08 19:56:36',
+            'modified' => '2015-10-08 19:56:36'
+        ],
     ];
 }

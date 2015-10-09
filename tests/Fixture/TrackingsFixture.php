@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\Fixture;
 
+use Cake\I18n\Time;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
@@ -39,15 +40,46 @@ class TrackingsFixture extends TestFixture
      *
      * @var array
      */
-    public $records = [
-        [
-            'id' => 1,
-            'started_at' => new Time(),
-            'stopped_at' => new Time(),
-            'trackable_id' => 1,
-            'trackable_type' => 'Todos',
-            'created' => '2015-10-09 13:19:39',
-            'modified' => '2015-10-09 13:19:39'
-        ],
-    ];
+    public function init()
+    {
+        $stoppedAt = new Time();
+        $startedAt = clone($stoppedAt);
+        $startedAt->modify('-2 hours');
+
+        $stoppedAt2 = new Time();
+        $startedAt2 = clone($stoppedAt2);
+        $startedAt2->modify('-45 seconds');
+
+        $this->records = [
+            [
+                'id' => 1,
+                'started_at' => $startedAt,
+                'stopped_at' => $stoppedAt,
+                'trackable_id' => 1,
+                'trackable_type' => 'Todos',
+                'created' => '2015-10-09 13:19:39',
+                'modified' => '2015-10-09 13:19:39'
+            ],
+            [
+                'id' => 2,
+                'started_at' => $startedAt,
+                'stopped_at' => $stoppedAt,
+                'trackable_id' => 2,
+                'trackable_type' => 'Todos',
+                'created' => '2015-10-09 13:19:39',
+                'modified' => '2015-10-09 13:19:39'
+            ],
+            [
+                'id' => 3,
+                'started_at' => $startedAt2,
+                'stopped_at' => $stoppedAt2,
+                'trackable_id' => 2,
+                'trackable_type' => 'Todos',
+                'created' => '2015-10-09 13:19:39',
+                'modified' => '2015-10-09 13:19:39'
+            ],
+        ];
+
+        parent::init();
+    }
 }

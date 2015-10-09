@@ -10,6 +10,10 @@ use Cake\TestSuite\TestCase;
  */
 class UsersTableTest extends TestCase
 {
+    /**
+     * Trait for helping the validations
+     */
+    use HelperTrait;
 
     /**
      * Fixtures
@@ -55,31 +59,10 @@ class UsersTableTest extends TestCase
         $user = $this->Users->newEntity($this->validAttributes());
         $this->assertEquals(count($user->errors()), 0);
 
-        $attributes = $this->validAttributes();
-        $attributes['email'] = '';
-        $user = $this->Users->newEntity($attributes);
-        $this->assertEquals(['email' => ['_empty' => 'This field cannot be left empty']], $user->errors());
-
-        $attributes = $this->validAttributes();
-        $attributes['name'] = '';
-        $user = $this->Users->newEntity($attributes);
-        $this->assertEquals(['name' => ['_empty' => 'This field cannot be left empty']], $user->errors());
-
-        $attributes = $this->validAttributes();
-        $attributes['password'] = '';
-        $user = $this->Users->newEntity($attributes);
-        $this->assertEquals(
-            [
-                'password' => ['_empty' => 'This field cannot be left empty'],
-                'password_confirmation' => ['custom' => 'The password does not match']
-            ],
-            $user->errors()
-        );
-
-        $attributes = $this->validAttributes();
-        $attributes['email'] = 'testtest.com';
-        $user = $this->Users->newEntity($attributes);
-        $this->assertEquals(['email' => ['valid' => 'The provided value is invalid']], $user->errors());
+        $this->assertPresenceOf($this->Users, 'name');
+        $this->assertPresenceOf($this->Users, 'email');
+        $this->assertPresenceOf($this->Users, 'password', ['password_confirmation' => ['custom' => 'The password does not match']]);
+        $this->assertEmailFormat($this->Users);
 
         $attributes = $this->validAttributes();
         $attributes['password_confirmation'] = '321';

@@ -42,10 +42,10 @@ class TrackingsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'started_at' => 1444396779,
-            'stopped_at' => 1444396779,
+            'started_at' => new Time(),
+            'stopped_at' => new Time(),
             'trackable_id' => 1,
-            'trackable_type' => 'Lorem ipsum dolor sit amet',
+            'trackable_type' => 'Todos',
             'created' => '2015-10-09 13:19:39',
             'modified' => '2015-10-09 13:19:39'
         ],

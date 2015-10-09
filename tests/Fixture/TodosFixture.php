@@ -45,7 +45,7 @@ class TodosFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            'content' => 'This is a sample todo!',
             'user_id' => 1,
             'is_done' => 1,
             'created' => '2015-10-08 19:56:36',

@@ -20,13 +20,6 @@ class TrackableBehavior extends Behavior
     protected $_defaultConfig = [];
 
     /**
-     * Holds the TrackingsTable instance
-     *
-     * @var App\Model\Table\TrackingsTable
-     */
-    protected $Trackings = null;
-
-    /**
      * Initialize hook
      *
      * It adds the hasMany association to the target table

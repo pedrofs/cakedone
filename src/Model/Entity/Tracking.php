@@ -28,7 +28,9 @@ class Tracking extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false,
+        'started_at' => true,
+        'stopped_at' => true,
+        'trackable_id' => true,
+        'trackable_type' => true
     ];
 }

@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * User Entity.
@@ -32,4 +33,16 @@ class User extends Entity
         'password' => true,
         'password_confirmation' => true
     ];
+
+    /**
+     * Mutator/setter method to enable password hashing
+     *
+     * @param string $value The password that will be hashed
+     * @return void
+     */
+    protected function _setPassword($value)
+    {
+        $hasher = new DefaultPasswordHasher();
+        return $hasher->hash($value);
+    }
 }

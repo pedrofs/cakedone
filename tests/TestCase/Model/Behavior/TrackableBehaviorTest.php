@@ -106,7 +106,7 @@ class TrackableBehaviorTest extends TestCase
     public function testExpectExceptionWhenStopTrackingForNonStartedEntity()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $todo = $this->Todos->find()->first();
+        $todo = $this->Todos->get(1);
         $this->Todos->stopTracking($todo);
     }
 
@@ -115,10 +115,10 @@ class TrackableBehaviorTest extends TestCase
         $todo = $this->Todos->newEntity();
         $this->assertTrue(0 === $this->Todos->timeSpent($todo));
 
-        $todo = $this->Todos->find()->first();
+        $todo = $this->Todos->get(1);
         $this->assertEquals(7200, $this->Todos->timeSpent($todo));
 
-        $todo = $this->Todos->find()->last();
+        $todo = $this->Todos->get(2);
         $this->assertEquals(7245, $this->Todos->timeSpent($todo));
     }
 }

@@ -74,4 +74,22 @@ class TodosTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         return $rules;
     }
+
+    /**
+     * forUser finder method
+     *
+     * It will find all todos for a given user id
+     *
+     * @param Query $q The Query builder
+     * @param $options The options should have an index `id`
+     * @return Query
+     */
+    public function findForUser(Query $query, $options)
+    {
+        if (!isset($options['id'])) {
+            throw new \InvalidArgumentException("You should provide an user id through \$options\['id'\]");
+        }
+
+        return $query->where(['user_id' => $options['id']]);
+    }
 }

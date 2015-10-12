@@ -60,4 +60,16 @@ class TodosTableTest extends TestCase
         $todo = $this->Todos->patchEntity($todo, ['content' => 'Write tests for app']);
         $this->assertEquals($todo->errors(), ['is_done' => ['_required' => 'This field is required']]);
     }
+
+    public function testForUserFinder()
+    {
+        $todos = $this->Todos->find('forUser', ['id' => 1])->all();
+        $this->assertEquals(count($todos), 2);
+    }
+
+    public function testForUserFinderException()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $todos = $this->Todos->find('forUser', ['user' => 1]);
+    }
 }

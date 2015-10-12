@@ -75,17 +75,16 @@ class TrackingsTable extends Table
     /**
      * Returns the query for finding the started and not stopped record
      *
-     * @param integer $id The target entity id
+     * @param Query $query The Query builder
+     * @param $options The options should have an index `id`
      * @return Query
      */
-    public function findStarted(Query $q, $options)
+    public function findStarted(Query $query, $options)
     {
-        $q->where([
+        return $query->where([
             'stopped_at' => '0000-00-00 00:00:00',
             'trackable_id' => $options['id']
         ]);
-
-        return $q;
 
     }
 }

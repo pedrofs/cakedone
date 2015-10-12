@@ -3,3 +3,4 @@
 /tmp/*
 /logs/*
 /node_modules
+/webroot/vendor

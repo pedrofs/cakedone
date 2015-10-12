@@ -53,8 +53,7 @@ class AppController extends Controller
                         'id' => 'id'
                     ]
                 ],
-            ],
-            'checkAuthIn' => 'Controller.initialize'
+            ]
         ]);
     }
 

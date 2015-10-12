@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Network\Exception\MethodNotAllowedException;
 
 /**
  * Todos Controller
@@ -18,10 +19,8 @@ class TodosController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Users']
-        ];
-        $this->set('todos', $this->paginate($this->Todos));
+        $user = $this->Auth->user();
+        $this->set('todos', $this->paginate($this->Todos->find('forUser', ['id' => $user['id']])));
         $this->set('_serialize', ['todos']);
     }
 
@@ -35,7 +34,7 @@ class TodosController extends AppController
     public function view($id = null)
     {
         $todo = $this->Todos->get($id, [
-            'contain' => ['Users']
+            'contain' => ['Trackings']
         ]);
         $this->set('todo', $todo);
         $this->set('_serialize', ['todo']);
@@ -48,19 +47,22 @@ class TodosController extends AppController
      */
     public function add()
     {
+        $this->request->allowMethod(['post']);
+
+        $user = $this->Auth->user();
         $todo = $this->Todos->newEntity();
-        if ($this->request->is('post')) {
-            $todo = $this->Todos->patchEntity($todo, $this->request->data);
-            if ($this->Todos->save($todo)) {
-                $this->Flash->success(__('The todo has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The todo could not be saved. Please, try again.'));
-            }
+        $todo = $this->Todos->patchEntity($todo, $this->request->data);
+        $todo->set('user_id', $user['id']);
+
+        if ($this->Todos->save($todo)) {
+            $this->response->statusCode(201);
+            $this->set(compact('todo'));
+            $this->set('_serialize', ['todo']);
+        } else {
+            $this->response->statusCode(400);
+            $this->set('errors', $todo->errors());
+            $this->set('_serialize', ['errors']);
         }
-        $users = $this->Todos->Users->find('list', ['limit' => 200]);
-        $this->set(compact('todo', 'users'));
-        $this->set('_serialize', ['todo']);
     }
 
     /**
@@ -72,21 +74,19 @@ class TodosController extends AppController
      */
     public function edit($id = null)
     {
-        $todo = $this->Todos->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $todo = $this->Todos->patchEntity($todo, $this->request->data);
-            if ($this->Todos->save($todo)) {
-                $this->Flash->success(__('The todo has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The todo could not be saved. Please, try again.'));
-            }
+        $this->request->allowMethod(['post', 'put', 'patch']);
+
+        $todo = $this->Todos->get($id);
+        $todo = $this->Todos->patchEntity($todo, $this->request->data);
+
+        if ($this->Todos->save($todo)) {
+            $this->set(compact('todo'));
+            $this->set('_serialize', ['todo']);
+        } else {
+            $this->response->statusCode(400);
+            $this->set('errors', $todo->errors());
+            $this->set('_serialize', ['errors']);
         }
-        $users = $this->Todos->Users->find('list', ['limit' => 200]);
-        $this->set(compact('todo', 'users'));
-        $this->set('_serialize', ['todo']);
     }
 
     /**
@@ -99,12 +99,10 @@ class TodosController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+
         $todo = $this->Todos->get($id);
-        if ($this->Todos->delete($todo)) {
-            $this->Flash->success(__('The todo has been deleted.'));
-        } else {
-            $this->Flash->error(__('The todo could not be deleted. Please, try again.'));
+        if (!$this->Todos->delete($todo)) {
+            $this->response->statusCode(400);
         }
-        return $this->redirect(['action' => 'index']);
     }
 }

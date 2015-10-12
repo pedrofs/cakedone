@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Behavior;
 
-
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
@@ -30,6 +29,8 @@ class TrackableBehavior extends Behavior
     public function initialize(array $config)
     {
         $this->_table->hasMany('Trackings', [
+            'foreignKey' => 'trackable_id',
+            'dependent' => true,
             'conditions' => [
                 'trackable_type' => $this->_table->alias()
             ]

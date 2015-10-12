@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "bower": "1.5.3"
+  },
+  "scripts": {
+    "prestart": "bower install",
+    "start": "npm install"
+  }
+}

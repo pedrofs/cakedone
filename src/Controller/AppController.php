@@ -42,7 +42,6 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
-        $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
             'unauthorizedRedirect' => false,
             'storage' => 'Memory',

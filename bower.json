@@ -1,0 +1,7 @@
+{
+  "name": "cakedone",
+  "dependencies": {
+    "angular": "~1.4.7",
+    "Materialize": "materialize#~0.97.1"
+  }
+}

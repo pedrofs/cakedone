@@ -44,16 +44,17 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
-            'authenticate', [
+            'unauthorizedRedirect' => false,
+            'storage' => 'Memory',
+            'authenticate' => [
                 'ADmad/JwtAuth.Jwt' => [
                     'parameter' => '_token',
                     'userModel' => 'Users',
                     'fields' => [
                         'id' => 'id'
                     ]
-                ]
+                ],
             ],
-            'unauthorizedRedirect' => false,
             'checkAuthIn' => 'Controller.initialize'
         ]);
     }

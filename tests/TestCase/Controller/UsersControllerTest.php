@@ -3,12 +3,14 @@ namespace App\Test\TestCase\Controller;
 
 use App\Controller\UsersController;
 use Cake\TestSuite\IntegrationTestCase;
+use Cake\ORM\TableRegistry;
 
 /**
  * App\Controller\UsersController Test Case
  */
 class UsersControllerTest extends IntegrationTestCase
 {
+    use HelperTrait;
 
     /**
      * Fixtures
@@ -16,57 +18,45 @@ class UsersControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.users',
-        'app.todos'
+        'app.users'
     ];
 
-    /**
-     * Test index method
-     *
-     * @return void
-     */
-    public function testIndex()
+    public function setUp()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        parent::setUp();
+        $config = TableRegistry::exists('Users') ? [] : ['className' => 'App\Model\Table\UsersTable'];
+        $this->Users = TableRegistry::get('Users', $config);
     }
 
-    /**
-     * Test view method
-     *
-     * @return void
-     */
-    public function testView()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test add method
-     *
-     * @return void
-     */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->post("/users/add.json", $this->getValidUserAttributes());
+        $response = $this->decodedResponse();
+        $this->assertResponseCode(201);
+        $this->assertEquals(2, count($this->Users->find()->all()));
+        $this->assertTrue(isset($response['token']));
+
+        $attributes = $this->getValidUserAttributes();
+        $attributes['password_confirmation'] = '321';
+        $this->post("/users/add.json", $attributes);
+        $this->assertResponseCode(400);
+        $this->assertResponseEquals($this->getExpectedResponse([
+            'errors' => [
+                'password_confirmation' => [
+                    'custom' => 'The password does not match'
+                ]
+            ]
+        ]));
+        $this->assertEquals(2, count($this->Users->find()->all()));
     }
 
-    /**
-     * Test edit method
-     *
-     * @return void
-     */
-    public function testEdit()
+    private function getValidUserAttributes()
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test delete method
-     *
-     * @return void
-     */
-    public function testDelete()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        return [
+            'name' => 'Test',
+            'email' => 'test@test.com',
+            'password' => '123',
+            'password_confirmation' => '123'
+        ];
     }
 }

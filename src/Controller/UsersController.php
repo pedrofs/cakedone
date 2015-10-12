@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
+use Cake\Utility\Security;
 
 /**
  * Users Controller
@@ -10,96 +12,53 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
-
     /**
-     * Index method
+     * beforeFilter hook method
      *
-     * @return void
-     */
-    public function index()
-    {
-        $this->set('users', $this->paginate($this->Users));
-        $this->set('_serialize', ['users']);
-    }
-
-    /**
-     * View method
+     * This before filter is used to enable users the add and authenticate
      *
-     * @param string|null $id User id.
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @param Event $event The beforeFilter event
      */
-    public function view($id = null)
+    public function beforeFilter(Event $event)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Todos']
-        ]);
-        $this->set('user', $user);
-        $this->set('_serialize', ['user']);
+        parent::beforeFilter($event);
+        $this->Auth->allow(['add', 'auth']);
     }
 
     /**
      * Add method
      *
-     * @return void Redirects on successful add, renders view otherwise.
+     * @return void Render user and its token if success otherwise render errors
      */
     public function add()
     {
+        $this->request->allowMethod(['post']);
+
         $user = $this->Users->newEntity();
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
-            }
-        }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
-    }
+        $user = $this->Users->patchEntity($user, $this->request->data);
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id User id.
-     * @return void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
-            }
-        }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
-    }
+        if ($this->Users->save($user)) {
+            $this->response->statusCode(201);
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id User id.
-     * @return void Redirects to index.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
+            $token = $this->createToken($user);
+
+            $this->set('user', $user);
+            $this->set('token', $token);
+            $this->set('_serialize', ['user', 'token']);
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $this->response->statusCode(400);
+            $this->set('errors', $user->errors());
+            $this->set('_serialize', ['errors']);
         }
-        return $this->redirect(['action' => 'index']);
+    }
+
+    private function createToken($user)
+    {
+        return \JWT::encode(
+            [
+                'id' => $user->get('id')
+            ],
+            Security::salt()
+        );
     }
 }

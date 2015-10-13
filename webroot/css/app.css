@@ -1,0 +1,13 @@
+#header h1 {
+	position: relative;
+	padding:105px 0px 0px 0px;
+}
+
+#header h1 span {
+	font-size: 1em;
+}
+
+.checked-cake {
+	position:absolute;
+	top:10px;
+}

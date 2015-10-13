@@ -27,6 +27,16 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class PagesController extends AppController
 {
+    /**
+     * beforeFilter hook method
+     *
+     * @param Event $event The beforeFilter event
+     */
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['display']);
+    }
 
     /**
      * Displays a view

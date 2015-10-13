@@ -2,6 +2,9 @@
   "name": "cakedone",
   "dependencies": {
     "angular": "~1.4.7",
-    "Materialize": "materialize#~0.97.1"
+    "Materialize": "materialize#~0.97.1",
+    "angular-ui-router": "~0.2.15",
+    "angular-animate": "~1.4.7",
+    "angular-route": "~1.4.7"
   }
 }

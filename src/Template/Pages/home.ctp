@@ -1,3 +1,6 @@
+<?php $this->layout = false; ?>
+
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -5,10 +8,11 @@
         <meta charset="utf-8">
 
         <?php
-        	$this->element('header');
+          echo $this->element('header');
         ?>
     </head>
 
-    <body ng-app="cakedone">
+    <body ng-app="cakedone" class="grey lighten-4">
+      <ui-view></ui-view>
     </bod>
 </html>

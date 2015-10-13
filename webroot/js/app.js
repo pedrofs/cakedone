@@ -38,5 +38,14 @@
 					console.log('login state');
 				}]
 			};
+		}])
+		.directive('register', [function () {
+			return {
+				restrict: "E",
+				templateUrl: '/views/public/register.html',
+				controller: ['$scope', function ($scope) {
+					console.log('register state');
+				}]
+			};
 		}]);
 })();

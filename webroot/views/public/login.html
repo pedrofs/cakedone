@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="login-form col l4 m6 s12 offset-l4 offset-m3 teal card-panel">
+    <h2 class="center-align amber-text text-darken-1">LOGIN</h2>
+    <hr/>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="material-icons prefix">perm_identity</i>
+        <input ng-model="user.email" id="email" type="email" class="validate">
+        <label for="email">Email</label>
+      </div>
+
+      <div class="input-field col s12">
+        <i class="material-icons prefix">lock_outline</i>
+        <input ng-model="user.password" id="password" type="password" class="validate">
+        <label for="password">Password</label>
+      </div>
+
+      <div class="col s12 right-align">
+        <a style="margin-right:15px" ui-sref="public.register" class="amber-text text-darken-1">Create account</a>
+
+        <button class="btn-flat amber darken-1 grey-text text-darken-3">LOGIN</button>
+      </div>
+    </div>
+  </div>
+</div>

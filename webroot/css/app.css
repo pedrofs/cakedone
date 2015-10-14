@@ -1,3 +1,10 @@
+input[type="checkbox"]+label:before {
+	border-color: #ffb300;	
+}
+input[type="checkbox"]:checked+label:before {
+	border-bottom: 2px solid #76ff03;
+	border-right: 2px solid #76ff03;
+}
 input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
     border-bottom: 1px solid #ffb300;
     box-shadow: 0 1px 0 0 #ffb300;
@@ -30,6 +37,8 @@ input[type=text], input[type=password], input[type=email], input[type=url], inpu
 
 body {
 	font-family:Anton;
+	color: #ffb300;
+	font-size: 1.2em;
 }
 
 #header h1 {
@@ -49,6 +58,10 @@ body {
 	font-weight:normal;
 }
 
+#header-app {
+	margin-bottom: 25px;
+}
+
 #header-app span {
 	font-size: 1.5em;
 }
@@ -57,16 +70,13 @@ body {
 	vertical-align:middle;
 }
 
-#logo {
-	position:relative;
-	z-index:999;
+#get-done {
+	font-size: 2em;	
 }
 
-#checked-cake {
-	position:absolute;
-	top:10px;
-	right: 0px;
-	z-index: 1;
+#get-done input {
+	width: 45%;
+	font-size: 1em;
 }
 
 .login-form h2 {
@@ -80,4 +90,14 @@ body {
 
 .submit {
 	margin-top:15px;
+}
+
+table .remove {
+	opacity:0;
+	font-size: 2em;
+	cursor: pointer;
+}
+
+table tr:hover .remove {
+	opacity:1;
 }

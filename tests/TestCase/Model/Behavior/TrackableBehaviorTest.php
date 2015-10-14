@@ -116,7 +116,7 @@ class TrackableBehaviorTest extends TestCase
         $this->assertTrue(0 === $this->Todos->timeSpent($todo));
 
         $todo = $this->Todos->get(1);
-        $this->assertEquals(7200, $this->Todos->timeSpent($todo));
+        $this->assertEquals(25200, $this->Todos->timeSpent($todo));
 
         $todo = $this->Todos->get(2);
         $this->assertEquals(7245, $this->Todos->timeSpent($todo));

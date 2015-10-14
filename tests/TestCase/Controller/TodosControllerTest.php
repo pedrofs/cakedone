@@ -109,7 +109,7 @@ class TodosControllerTest extends IntegrationTestCase
         $response = $this->decodedResponse();
         $this->assertResponseCode(200);
         $this->assertTrue(isset($response['todo']['trackings']));
-        $this->assertEquals(1, count($response['todo']['trackings']));
+        $this->assertEquals(2, count($response['todo']['trackings']));
 
         $this->get("/todos/view/25.json?_token=$token");
         $this->assertResponseCode(404);
@@ -125,7 +125,7 @@ class TodosControllerTest extends IntegrationTestCase
         $this->post("/todos/delete/1.json?_token=$token");
         $this->assertResponseCode(200);
         $this->assertEquals(3, count($this->Todos->find()->all()));
-        $this->assertEquals(2, count($this->Todos->Trackings->find()->all()));
+        $this->assertEquals(3, count($this->Todos->Trackings->find()->all()));
 
         $this->post("/todos/delete/3.json?_token=$token");
         $this->assertResponseCode(401);
@@ -141,14 +141,14 @@ class TodosControllerTest extends IntegrationTestCase
         $response = $this->decodedResponse();
         $this->assertResponseCode(200);
         $this->assertTrue(isset($response['tracking']));
-        $this->assertEquals(4, count($this->Todos->Trackings->find()->all()));
+        $this->assertEquals(6, count($this->Todos->Trackings->find()->all()));
 
         $this->post("/todos/start/1.json?_token=$token");
         $response = $this->decodedResponse();
         $this->assertResponseCode(400);
         $this->assertTrue(!isset($response['tracking']));
         $this->assertEquals('Entity is started. Stop it before starting again.', $response['error']);
-        $this->assertEquals(4, count($this->Todos->Trackings->find()->all()));
+        $this->assertEquals(6, count($this->Todos->Trackings->find()->all()));
 
         $this->post("/todos/start/25.json?_token=$token");
         $this->assertResponseCode(404);
@@ -166,14 +166,14 @@ class TodosControllerTest extends IntegrationTestCase
         $this->assertResponseCode(400);
         $this->assertTrue(!isset($response['tracking']));
         $this->assertEquals('Entity tracking not started. Start it before trying to stop.', $response['error']);
-        $this->assertEquals(3, count($this->Todos->Trackings->find()->all()));
+        $this->assertEquals(5, count($this->Todos->Trackings->find()->all()));
 
         $this->post("/todos/start/1.json?_token=$token");
         $this->post("/todos/stop/1.json?_token=$token");
         $response = $this->decodedResponse();
         $this->assertResponseCode(200);
         $this->assertTrue(isset($response['tracking']));
-        $this->assertEquals(4, count($this->Todos->Trackings->find()->all()));
+        $this->assertEquals(6, count($this->Todos->Trackings->find()->all()));
 
         $this->post("/todos/stop/25.json?_token=$token");
         $this->assertResponseCode(404);

@@ -88,6 +88,9 @@ class TodosControllerTest extends IntegrationTestCase
         $this->post("/todos/edit/1.json?_token=$token", ['content' => '']);
         $this->assertResponseCode(400);
 
+        $this->post("/todos/edit/3.json?_token=$token", ['content' => 'Edited todo']);
+        $this->assertResponseCode(401);
+
         $this->post("/todos/edit/25.json?_token=$token", ['content' => "Edited todo"]);
         $this->assertResponseCode(404);
 
@@ -124,6 +127,9 @@ class TodosControllerTest extends IntegrationTestCase
         $this->assertEquals(3, count($this->Todos->find()->all()));
         $this->assertEquals(2, count($this->Todos->Trackings->find()->all()));
 
+        $this->post("/todos/delete/3.json?_token=$token");
+        $this->assertResponseCode(401);
+
         $this->post("/todos/delete/25.json?_token=$token");
         $this->assertResponseCode(404);
     }
@@ -136,8 +142,8 @@ class TodosControllerTest extends IntegrationTestCase
                 'content' => 'This is a sample todo!',
                 'user_id' => 1,
                 "is_done" => true,
-                "created" => "2015-10-08T19:56:36+0000",
-                "modified" => "2015-10-08T19:56:36+0000"
+                "created" => "2015-10-08T19:56:36-0300",
+                "modified" => "2015-10-08T19:56:36-0300"
 
             ],
             [
@@ -145,8 +151,8 @@ class TodosControllerTest extends IntegrationTestCase
                 'content' => 'This another simple todo!',
                 'user_id' => 1,
                 "is_done" => true,
-                "created" => "2015-10-08T19:56:36+0000",
-                "modified" => "2015-10-08T19:56:36+0000"
+                "created" => "2015-10-08T19:56:36-0300",
+                "modified" => "2015-10-08T19:56:36-0300"
             ],
         ]]);
     }

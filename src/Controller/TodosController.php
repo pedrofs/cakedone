@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\Network\Exception\UnauthorizedException;
 
 /**
  * Todos Controller
@@ -75,8 +76,14 @@ class TodosController extends AppController
     public function edit($id = null)
     {
         $this->request->allowMethod(['post', 'put', 'patch']);
+        $user = $this->Auth->user();
 
         $todo = $this->Todos->get($id);
+
+        if ($todo->user_id !== $user['id']) {
+            throw new UnauthorizedException();
+        }
+
         $todo = $this->Todos->patchEntity($todo, $this->request->data);
 
         if ($this->Todos->save($todo)) {
@@ -99,8 +106,14 @@ class TodosController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+        $user = $this->Auth->user();
 
         $todo = $this->Todos->get($id);
+
+        if ($todo->user_id !== $user['id']) {
+            throw new UnauthorizedException();
+        }
+
         if (!$this->Todos->delete($todo)) {
             $this->response->statusCode(400);
         }

@@ -35,6 +35,30 @@ class User extends Entity
     ];
 
     /**
+     * Fields that should not be exposed
+     *
+     * @var array
+     */
+    protected $_hidden = ['password', 'password_confirmation'];
+
+    /**
+     * Virtual properties that should be exposed
+     *
+     * @var array
+     */
+    protected $_virtual = ['time_ago_from_created'];
+
+    /**
+     * Getter for defining time ago virtual property
+     *
+     * @return string Time ago in words for the `created`
+     */
+    protected function _getTimeAgoFromCreated()
+    {
+        return $this->created->timeAgoInWords();
+    }
+
+    /**
      * Mutator/setter method to enable password hashing
      *
      * @param string $value The password that will be hashed

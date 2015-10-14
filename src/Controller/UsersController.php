@@ -42,9 +42,6 @@ class UsersController extends AppController
 
             $token = $this->createToken($user);
 
-            $user->unsetProperty('password');
-            $user->unsetProperty('password_confirmation');
-
             $this->set('user', $user);
             $this->set('token', $token);
             $this->set('_serialize', ['user', 'token']);

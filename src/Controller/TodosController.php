@@ -12,6 +12,7 @@ use Cake\Network\Exception\UnauthorizedException;
  */
 class TodosController extends AppController
 {
+    use TrackableTrait;
 
     /**
      * Initialization hook method.

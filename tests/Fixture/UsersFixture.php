@@ -43,7 +43,7 @@ class UsersFixture extends TestFixture
             'id' => 1,
             'name' => 'Test',
             'email' => 'test@test1.com',
-            'password' => '123123',
+            'password' => '$2y$10$zQBF/cK.xfEN29rwouCc5.OdiRm3ddiR9Upyycyqd6gDqA4A3ve8u',
             'created' => '2015-10-08 19:56:30',
             'modified' => '2015-10-08 19:56:30'
         ],

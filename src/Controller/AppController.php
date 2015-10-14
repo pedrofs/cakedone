@@ -46,6 +46,9 @@ class AppController extends Controller
             'unauthorizedRedirect' => false,
             'storage' => 'Memory',
             'authenticate' => [
+                'Form' => [
+                    'fields' => ['username' => 'email', 'password' => 'password']
+                ],
                 'ADmad/JwtAuth.Jwt' => [
                     'parameter' => '_token',
                     'userModel' => 'Users',

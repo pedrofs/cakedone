@@ -53,6 +53,17 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertEquals(2, count($this->Users->find()->all()));
     }
 
+    public function testLogin()
+    {
+        $this->post('/users/login.json', ['email' => 'test@test1.com', 'password' => '123123']);
+        $response = $this->decodedResponse();
+        $this->assertResponseCode(200);
+        $this->assertTrue(isset($response['token']));
+
+        $this->post('/users/login.json', ['email' => 'testwrong@wrong.com', '123123']);
+        $this->assertResponseCode(400);
+    }
+
     private function getValidUserAttributes()
     {
         return [

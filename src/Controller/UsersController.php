@@ -22,7 +22,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['add', 'auth']);
+        $this->Auth->allow(['add', 'login']);
     }
 
     /**
@@ -40,7 +40,7 @@ class UsersController extends AppController
         if ($this->Users->save($user)) {
             $this->response->statusCode(201);
 
-            $token = $this->createToken($user);
+            $token = $this->createToken($user->get('id'));
 
             $this->set('user', $user);
             $this->set('token', $token);
@@ -52,11 +52,32 @@ class UsersController extends AppController
         }
     }
 
-    private function createToken($user)
+    /**
+     * Login method
+     *
+     * @return void Render user and token if successful login otherwise 400
+     */
+    public function login()
+    {
+        $this->request->allowMethod(['post']);
+
+        $user = $this->Auth->identify();
+
+        if (!$user) {
+            $this->response->statusCode(400);
+        } else {
+            $token = $this->createToken($user);
+            $this->set('user', $user['id']);
+            $this->set('token', $token);
+            $this->set('_serialize', ['user', 'token']);
+        }
+    }
+
+    private function createToken($userId)
     {
         return \JWT::encode(
             [
-                'id' => $user->get('id')
+                'id' => $userId
             ],
             Security::salt()
         );

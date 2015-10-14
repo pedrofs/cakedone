@@ -57,6 +57,13 @@ Router::scope('/', function ($routes) {
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
     /**
+     * Definig trackable routes
+     */
+    $routes->connect('/:trackable/:trackable_id/trackings', ['controller' => 'trackings', 'action' => 'index']);
+    $routes->connect('/:trackable/:trackable_id/trackings/:action', ['controller' => 'trackings']);
+    $routes->connect('/:trackable/:trackable_id/trackings/:action/*', ['controller' => 'trackings']);
+
+    /**
      * Connect catchall routes for all controllers.
      *
      * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for

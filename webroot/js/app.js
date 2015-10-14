@@ -25,8 +25,9 @@
 				resolve: {
 					todos: ['api', 'TodosData', function (api, TodosData) {
 						return api.todos()
-							.then(function (todos) {
-								TodosData.todos = todos;
+							.then(function (data) {
+								TodosData.todos = data.todos;
+								TodosData.paging = data.paging;
 							});
 					}]
 				}

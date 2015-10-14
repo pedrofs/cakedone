@@ -49,7 +49,7 @@
 			function todos(page) {
 				return $http.get(addPageToUrl('/todos.json', page))
 					.then(function (response) {
-						return response.data.todos;
+						return response.data;
 					});
 			};
 

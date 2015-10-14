@@ -5,15 +5,7 @@
 		.factory("TodosData", [function () {
 			return {
 				todos: [],
-				remove: function (id) {
-					var i;
-					for (i=0;i<this.todos.length;i++) {
-						if (this.todos[i].id == id) {
-							this.todos = this.todos.slice(0,i).concat(this.todos.slice(i+1));
-							return;
-						}
-					}
-				}
+				paging: {}
 			};
 		}])
 		.directive("private", function () {
@@ -31,10 +23,22 @@
 
 					$scope.add = function (todo) {
 						todo.is_done = false;
-						api.addTodo(todo).then(function (todo) {
-							TodosData.todos.push(todo);
+						api.addTodo(todo).then(function () {
 							$scope.todo.content = '';
+
+							api.todos().then(function (data) {
+								TodosData.todos = data.todos;
+								TodosData.paging = data.paging;
+							})
 						});
+					};
+
+					$scope.loadMore = function () {
+						api.todos(TodosData.paging.page+1)
+							.then(function (data) {
+								TodosData.paging = data.paging;
+								TodosData.todos = TodosData.todos.concat(data.todos);
+							});
 					}
 				}]
 			}
@@ -53,7 +57,10 @@
 				controller: ['$scope', '$timeout', 'TodosData', 'api', function ($scope, $timeout, TodosData, api) {
 					$scope.remove = function () {
 						api.removeTodo($scope.todoId).then(function () {
-							TodosData.remove($scope.todoId);
+							api.todos().then(function (data) {
+								TodosData.todos = data.todos;
+								TodosData.paging = data.paging;
+							})
 						})
 					}
 				}]

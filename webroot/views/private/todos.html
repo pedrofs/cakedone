@@ -1,12 +1,14 @@
 <div class="row" id="get-done">
 	<div class="col s12 card-panel center-align teal">
-		<form data-parsley-validate>
+		<form>
 				<span class="amber-text text-darken-1">WHAT DO GET DONE?</span>
 				<input ng-model="todo.content" id="content" type="text" class="validate" required>
 				<button ng-click="add(todo)" class="btn-flat amber darken-1 grey-text text-darken-3">OK</button>
 		</div>
 	</div>
 </div>
+
+<p>Showing {{TodosData.todos.length}} of {{TodosData.paging.count}}</p>
 
 <div class="row" id="todos">
 	<div class="s12 card-panel teal">
@@ -28,5 +30,11 @@
 	      </tr>
 	    <tbody>
 	  </table>
+	</div>
+</div>
+
+<div class="row" ng-if="TodosData.paging.nextPage">
+	<div class="col s12 center-align">
+		<button ng-click="loadMore()" class="btn-flat amber darken-1 grey-text text-darken-3">Load more</button>
 	</div>
 </div>

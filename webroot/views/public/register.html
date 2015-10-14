@@ -3,36 +3,43 @@
     <h2 class="center-align amber-text text-darken-1">REGISTER</h2>
     <hr/>
 
-    <div class="row">
-      <div class="input-field col s12">
-        <i class="material-icons prefix">perm_identity</i>
-        <input ng-model="user.name" id="name" type="text" class="validate">
-        <label for="name">Name</label>
-      </div>
+    <form ng-init="user = {}" data-parsley-validate>
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">perm_identity</i>
+          <input ng-model="user.name" id="name" type="text" class="validate" required>
+          <label for="name">Name</label>
+        </div>
 
-      <div class="input-field col s12">
-        <i class="material-icons prefix">email</i>
-        <input ng-model="user.email" id="email" type="email" class="validate">
-        <label for="email">Email</label>
-      </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">email</i>
+          <input ng-model="user.email" id="email" type="email" class="validate" required>
+          <label for="email">Email</label>
+        </div>
 
-      <div class="input-field col s12">
-        <i class="material-icons prefix">lock_outline</i>
-        <input ng-model="user.password" id="password" type="password" class="validate">
-        <label for="password">Password</label>
-      </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">lock_outline</i>
+          <input ng-model="user.password" id="password" type="password" class="validate" required>
+          <label for="password">Password</label>
+        </div>
 
-      <div class="input-field col s12">
-        <i class="material-icons prefix">lock_outline</i>
-        <input ng-model="user.password_confirmation" id="password_confirmation" type="password" class="validate">
-        <label for="password_confirmation">Password confirmation</label>
-      </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">lock_outline</i>
+          <input ng-model="user.password_confirmation"
+                 id="password_confirmation"
+                 type="password"
+                 class="validate"
+                 data-parsley-equalto="#password"
+                 required />
+          <label for="password_confirmation">Password confirmation</label>
+        </div>
 
-      <div class="col s12 right-align">
-        <a style="margin-right:15px" ui-sref="public.login" class="amber-text text-darken-1">Have an account? Login!</a>
+        <div class="col s12 right-align submit">
+          <a style="margin-right:15px" ui-sref="public.login" class="amber-text text-darken-1">Have an account? Login!</a>
 
-        <button class="btn-flat amber darken-1 grey-text text-darken-3">REGISTER</button>
+          <button ng-click="register(user)" class="btn-flat amber darken-1 grey-text text-darken-3">REGISTER</button>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>

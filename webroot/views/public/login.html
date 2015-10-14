@@ -4,23 +4,25 @@
     <hr/>
 
     <div class="row">
-      <div class="input-field col s12">
-        <i class="material-icons prefix">email</i>
-        <input ng-model="user.email" id="email" type="email" class="validate">
-        <label for="email">Email</label>
-      </div>
+      <form data-parsley-validate>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">email</i>
+          <input ng-model="user.email" id="email" type="email" class="validate" required>
+          <label for="email">Email</label>
+        </div>
 
-      <div class="input-field col s12">
-        <i class="material-icons prefix">lock_outline</i>
-        <input ng-model="user.password" id="password" type="password" class="validate">
-        <label for="password">Password</label>
-      </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">lock_outline</i>
+          <input ng-model="user.password" id="password" type="password" class="validate" required>
+          <label for="password">Password</label>
+        </div>
 
-      <div class="col s12 right-align">
-        <a style="margin-right:15px" ui-sref="public.register" class="amber-text text-darken-1">Create account</a>
+        <div class="col s12 right-align submit">
+          <a style="margin-right:15px" ui-sref="public.register" class="amber-text text-darken-1">Create account</a>
 
-        <button class="btn-flat amber darken-1 grey-text text-darken-3">LOGIN</button>
-      </div>
+          <button class="btn-flat amber darken-1 grey-text text-darken-3">LOGIN</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

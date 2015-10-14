@@ -9,6 +9,12 @@ echo $this->Html->script('/vendor/angular/angular.min');
 echo $this->Html->script('/vendor/angular-animate/angular-animate.min');
 echo $this->Html->script('/vendor/angular-route/angular-route.min');
 echo $this->Html->script('/vendor/angular-ui-router/release/angular-ui-router.min');
+echo $this->Html->script('/vendor/ngstorage/ngStorage.min');
 echo $this->Html->script('/vendor/Materialize/dist/js/materialize.min');
+echo $this->Html->script('/vendor/parsleyjs/dist/parsley.min');
 
+echo $this->Html->script('/js/auth.js');
+echo $this->Html->script('/js/common.js');
+echo $this->Html->script('/js/public.js');
+echo $this->Html->script('/js/todos.js');
 echo $this->Html->script('/js/app.js');

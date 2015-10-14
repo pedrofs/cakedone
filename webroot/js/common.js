@@ -30,13 +30,26 @@
 		.factory('api', ['$http', function ($http) {
 			var m = {
 				register: register,
-				todos: todos
+				todos: todos,
+				addTodo: addTodo,
+				removeTodo: removeTodo
 			};
+
+			function removeTodo(id) {
+				return $http.delete('/todos/delete/' + id + '.json');
+			}
+
+			function addTodo(todo) {
+				return $http.post('/todos/add.json', todo)
+					.then(function (response) {
+						return response.data.todo;
+					});
+			}
 
 			function todos(page) {
 				return $http.get(addPageToUrl('/todos.json', page))
 					.then(function (response) {
-						return response.data;
+						return response.data.todos;
 					});
 			};
 

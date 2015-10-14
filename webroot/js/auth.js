@@ -12,7 +12,7 @@
 					response: function (response) {
 						var data = response.data;
 
-						if (data.token && !user.token) {
+						if (data && data.token && !user.token) {
 							user.token = data.token;
 							$localStorage.token = data.token;
 						}

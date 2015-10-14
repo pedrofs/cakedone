@@ -14,6 +14,29 @@ class TodosController extends AppController
 {
 
     /**
+     * Initialization hook method.
+     *
+     * Use this method to add common initialization code like loading components.
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination', [
+            'key' => 'paging',
+            'visible' => [
+                'page',
+                'current',
+                'prevPage',
+                'nextPage',
+                'count'
+            ]
+        ]);
+    }
+
+    /**
      * Index method
      *
      * @return void
@@ -21,7 +44,12 @@ class TodosController extends AppController
     public function index()
     {
         $user = $this->Auth->user();
-        $this->set('todos', $this->paginate($this->Todos->find('forUser', ['id' => $user['id']])));
+        $todos = $this->paginate(
+            $this->Todos
+                ->find('forUser', ['id' => $user['id']])
+                ->order(['created' => 'DESC'])
+        );
+        $this->set('todos', $todos);
         $this->set('_serialize', ['todos']);
     }
 

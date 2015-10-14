@@ -1,1 +1,32 @@
-Test todo
+<div class="row" id="get-done">
+	<div class="col s12 card-panel center-align teal">
+		<form data-parsley-validate>
+				<span class="amber-text text-darken-1">WHAT DO GET DONE?</span>
+				<input ng-model="todo.content" id="content" type="text" class="validate" required>
+				<button ng-click="add(todo)" class="btn-flat amber darken-1 grey-text text-darken-3">OK</button>
+		</div>
+	</div>
+</div>
+
+<div class="row" id="todos">
+	<div class="s12 card-panel teal">
+		<div class="center-align" ng-if="TodosData.todos.length == 0">
+			<span class="amber-text text-darken-1">Nothing here.</span>
+		</div>
+
+	  <table>
+	    <tbody>
+	      <tr ng-repeat="todo in TodosData.todos">
+	      	<td width="10%"><input type="checkbox" id="done_{{ todo.id }}"><label for="done_{{ todo.id }}"></label></td>
+	      	<td width="30%" am-time-ago="todo.created | amParse:'YYYY-MM-DDTHH:mm:ss+0000'"></td>
+	      	<td width="50%">{{ todo.content }}</td>
+	      	<td width="10%" class="remove">
+	      		<span class="flat-btn" remove-todo todo-id="todo.id">
+          		<i class="material-icons">delete</i>
+	      		</span>
+	      	</td>
+	      </tr>
+	    <tbody>
+	  </table>
+	</div>
+</div>

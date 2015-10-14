@@ -25,7 +25,7 @@
 					todos: ['api', 'TodosData', function (api, TodosData) {
 						return api.todos()
 							.then(function (todos) {
-								console.log(todos);
+								TodosData.todos = todos;
 							});
 					}]
 				}

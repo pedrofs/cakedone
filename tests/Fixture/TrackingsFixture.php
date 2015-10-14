@@ -78,6 +78,24 @@ class TrackingsFixture extends TestFixture
                 'created' => '2015-10-09 13:19:39',
                 'modified' => '2015-10-09 13:19:39'
             ],
+            [
+                'id' => 4,
+                'started_at' => '2015-10-14T13:50:21-0300',
+                'stopped_at' => '2015-10-14T18:50:21-0300',
+                'trackable_id' => 1,
+                'trackable_type' => 'Todos',
+                'created' => '2015-10-14T13:50:21-0300',
+                'modified' => '2015-10-14T18:50:21-0300'
+            ],
+            [
+                'id' => 5,
+                'started_at' => $startedAt2,
+                'stopped_at' => $stoppedAt2,
+                'trackable_id' => 3,
+                'trackable_type' => 'Todos',
+                'created' => '2015-10-09 13:19:39',
+                'modified' => '2015-10-09 13:19:39'
+            ]
         ];
 
         parent::init();

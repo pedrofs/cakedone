@@ -5,6 +5,7 @@
 		'ngRoute',
 		'ngAnimate',
 		'ui.router',
+		'angular-loading-bar',
 		'auth',
 		'public',
 		'todos'

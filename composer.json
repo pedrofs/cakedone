@@ -11,7 +11,8 @@
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
         "cakephp/migrations": "~1.0",
-        "admad/cakephp-jwt-auth": "1.0.x-dev"
+        "admad/cakephp-jwt-auth": "1.0.x-dev",
+        "bcrowe/cakephp-api-pagination": "^1.0@dev"
     },
     "require-dev": {
         "psy/psysh": "@stable",

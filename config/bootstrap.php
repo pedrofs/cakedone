@@ -203,3 +203,4 @@ Type::build('date')->useLocaleParser();
 Type::build('datetime')->useLocaleParser();
 
 Plugin::load('ADmad/JwtAuth');
+Plugin::load('BryanCrowe/ApiPagination');

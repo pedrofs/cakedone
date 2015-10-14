@@ -34,7 +34,10 @@ class UsersControllerTest extends IntegrationTestCase
         $response = $this->decodedResponse();
         $this->assertResponseCode(201);
         $this->assertEquals(2, count($this->Users->find()->all()));
+
         $this->assertTrue(isset($response['token']));
+        $this->assertTrue(!isset($response['user']['password']));
+        $this->assertTrue(!isset($response['user']['password_confirmation']));
 
         $attributes = $this->getValidUserAttributes();
         $attributes['password_confirmation'] = '321';

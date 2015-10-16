@@ -72,4 +72,11 @@ class TodosTableTest extends TestCase
         $this->setExpectedException('InvalidArgumentException');
         $todos = $this->Todos->find('forUser', ['user' => 1]);
     }
+
+    public function testAccessible()
+    {
+        $todo = $this->Todos->newEntity(['is_done' => true, 'content' => 'testing']);
+        $this->assertEquals(true, $todo->is_done);
+        $this->assertEquals('testing', $todo->content);
+    }
 }

@@ -27,6 +27,7 @@ class Todo extends Entity
      * @var array
      */
     protected $_accessible = [
-        'content' => true
+        'content' => true,
+        'is_done' => true
     ];
 }

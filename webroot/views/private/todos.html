@@ -19,7 +19,15 @@
 	  <table>
 	    <tbody>
 	      <tr ng-repeat="todo in TodosData.todos">
-	      	<td width="10%"><input type="checkbox" id="done_{{ todo.id }}"><label for="done_{{ todo.id }}"></label></td>
+	      	<td width="10%">
+	      		<input check-done
+	      					 ng-checked="todo.is_done"
+	      					 todo-id="{{ todo.id }}"
+									 type="checkbox"
+									 id="done_{{ todo.id }}">
+
+   					<label for="done_{{ todo.id }}"></label>
+   				</td>
 	      	<td width="30%" am-time-ago="todo.created | amParse:'YYYY-MM-DDTHH:mm:ss+0000'"></td>
 	      	<td width="50%">{{ todo.content }}</td>
 	      	<td width="10%" class="remove">

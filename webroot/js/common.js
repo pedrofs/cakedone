@@ -32,8 +32,15 @@
 				register: register,
 				todos: todos,
 				addTodo: addTodo,
-				removeTodo: removeTodo
+				removeTodo: removeTodo,
+				editTodo: editTodo
 			};
+
+			function editTodo(id, todo) {
+				return $http.post('/todos/edit/'+id+'.json', todo).then(function (response) {
+					return response.data;
+				})
+			}
 
 			function removeTodo(id) {
 				return $http.delete('/todos/delete/' + id + '.json');

@@ -43,6 +43,15 @@
 				}]
 			}
 		}])
+		.directive("checkDone", ['api', function (api) {
+			return function (scope, element, attrs) {
+				element.on('click', function (e) {
+					var done = e.target.checked ? 1 : 0;
+
+					api.editTodo(attrs.todoId, {is_done: done});
+				});
+			}
+		}])
 		.directive("removeTodo", [function () {
 			return {
 				restrict: "A",

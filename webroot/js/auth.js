@@ -3,7 +3,7 @@
 
 	angular.module('auth', ['ngStorage'])
 		.config(['$provide', '$httpProvider', function ($provide, $httpProvider) {
-			$provide.factory('authInterceptor', ['$q', '$localStorage', function ($q, $localStorage) {
+			$provide.factory('authInterceptor', ['$q', '$localStorage', '$window', function ($q, $localStorage, $window) {
 				var user = {
 					token: null
 				};
@@ -28,7 +28,9 @@
 						return config;
 					},
 					responseError: function (response) {
-						console.log(response);
+						if (response.status == 401) {
+							$window.location = '/';
+						}
 
 						return $q.when(response);
 					}

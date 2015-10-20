@@ -32,7 +32,7 @@
 							$window.location = '/';
 						}
 
-						return $q.when(response);
+						return $q.reject(response);
 					}
 				};
 			}]);

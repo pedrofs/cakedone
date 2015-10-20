@@ -8,7 +8,7 @@
 					responseError: function (rejection) {
 						var data = rejection.data;
 
-						if (data.errors) {
+						if (data && data.errors) {
 							angular.forEach(data.errors, function (errors, field) {
 								var uierror = '';
 								angular.forEach(errors, function (error, errorName) {

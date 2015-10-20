@@ -1,5 +1,5 @@
 <?php
-echo $this->Html->css('http://fonts.googleapis.com/icon?family=Material+Icons|Anton');
+echo $this->Html->css('https://fonts.googleapis.com/icon?family=Material+Icons|Anton');
 echo $this->Html->css('/vendor/Materialize/dist/css/materialize.min');
 echo $this->Html->css('/vendor/angular-loading-bar/build/loading-bar.min');
 

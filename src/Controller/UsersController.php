@@ -66,7 +66,7 @@ class UsersController extends AppController
         if (!$user) {
             $this->response->statusCode(400);
         } else {
-            $token = $this->createToken($user);
+            $token = $this->createToken($user['id']);
             $this->set('user', $user['id']);
             $this->set('token', $token);
             $this->set('_serialize', ['user', 'token']);

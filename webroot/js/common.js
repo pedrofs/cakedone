@@ -30,11 +30,16 @@
 		.factory('api', ['$http', function ($http) {
 			var m = {
 				register: register,
+				login: login,
 				todos: todos,
 				addTodo: addTodo,
 				removeTodo: removeTodo,
 				editTodo: editTodo
 			};
+
+			function login(user) {
+				return $http.post('/users/login.json', {email: user.email, password: user.password});
+			}
 
 			function editTodo(id, todo) {
 				return $http.post('/todos/edit/'+id+'.json', todo).then(function (response) {

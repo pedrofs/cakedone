@@ -23,6 +23,7 @@
 						if (user.token || $localStorage.token) {
 							user.token = $localStorage.token;
 							config.headers.Authorization = "Bearer " + user.token;
+							config.url += '?_token=' + user.token;
 						}
 
 						return config;

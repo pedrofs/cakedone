@@ -8,7 +8,36 @@
 	</div>
 </div>
 
-<p>Showing {{TodosData.todos.length}} of {{TodosData.paging.count}}</p>
+<div class="row">
+	<div class="col s6">
+		<p>Showing {{TodosData.todos.length}} of {{TodosData.paging.count}}</p>
+	</div>
+	<!-- <div class="col s6 right-align">
+		<ul id="filter-dropdown" class="dropdown-content" ng-init="isDoneFilter = {}">
+	    <li>
+	    	<a class="grey-text text-darken-3" ng-click="isDoneFilter = {}">
+	    		All
+	    		<span class="badge">{{TodosData.todos.length}}</span>
+	    	</a>
+	    </li>
+
+	    <li>
+	    	<a class="grey-text text-darken-3" ng-click="isDoneFilter = {is_done: false}">
+	    		Pending
+	    		<span class="badge">{{ pendingTodos().length }}</span>
+	    	</a>
+	    </li>
+
+	    <li>
+	    	<a class="grey-text text-darken-3" ng-click="isDoneFilter = {is_done: true}">
+	    		Done
+	    		<span class="badge">{{ doneTodos().length }}</span>
+	    	</a>
+	    </li>
+	  </ul>
+	  <a class="btn-flat amber darken-1 grey-text text-darken-3 dropdown-button" href="#!" data-activates="filter-dropdown">Filter<i class="mdi-navigation-arrow-drop-down right"></i></a>
+	</div> -->
+</div>
 
 <div class="row" id="todos">
 	<div class="s12 card-panel teal">
@@ -18,7 +47,7 @@
 
 	  <table>
 	    <tbody>
-	      <tr ng-repeat="todo in TodosData.todos">
+	      <tr ng-repeat="todo in todos = (TodosData.todos|filter:isDoneFilter)">
 	      	<td width="10%">
 	      		<input check-done
 	      					 ng-checked="todo.is_done"

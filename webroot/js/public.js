@@ -12,8 +12,16 @@
 			return {
 				restrict: "E",
 				templateUrl: '/views/public/login.html',
-				controller: ['$scope', 'api', function ($scope, api) {
-					console.log('login state');
+				controller: ['$scope', '$state', 'api', function ($scope, $state, api) {
+					$scope.login = function (user) {
+						if (!$('form').parsley().validate()) {
+							return;
+						}
+
+						api.login(user).then(function (response) {
+							$state.go('private.todos');
+						});
+					}
 				}]
 			};
 		}])

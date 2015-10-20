@@ -93,11 +93,6 @@ body {
 }
 
 table .remove {
-	opacity:0;
 	font-size: 2em;
 	cursor: pointer;
-}
-
-table tr:hover .remove {
-	opacity:1;
 }

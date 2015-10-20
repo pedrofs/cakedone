@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	angular.module('todos', ['common', 'angularMoment'])
+	angular.module('todos', ['common', 'angularMoment', 'ngStorage'])
 		.factory("TodosData", [function () {
 			return {
 				todos: [],
@@ -11,15 +11,34 @@
 		.directive("private", function () {
 			return {
 				restrict: "E",
-				templateUrl: "/views/private/private.html"
+				templateUrl: "/views/private/private.html",
+				controller: ['$scope', '$window', '$localStorage', function ($scope, $window, $localStorage) {
+					$scope.logout = function () {
+						$localStorage.token = null;
+						$window.location = "/";
+					}
+				}]
 			};
 		})
-		.directive("todos", ['api', function (api) {
+		.directive("todos", ['$filter', 'api', function ($filter, api) {
 			return {
 				restrict: "E",
 				templateUrl: "/views/private/todos.html",
+				link: function (scope, e) {e.find('.dropdown-button').dropdown({})},
 				controller: ['$scope', 'TodosData', 'api', function ($scope, TodosData, api) {
 					$scope.TodosData = TodosData;
+
+					function filterTodos(v) {
+						return $filter('filter')(TodosData.todos, {is_done: v});
+					}
+
+					$scope.pendingTodos = function () {
+						return filterTodos(false);
+					}
+
+					$scope.doneTodos = function () {
+						return filterTodos(true);
+					}
 
 					$scope.add = function (todo) {
 						todo.is_done = false;
